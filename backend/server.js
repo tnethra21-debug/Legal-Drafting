@@ -71,7 +71,6 @@ app.listen(config.port, () => {
   Status:  Running on http://localhost:${config.port}
   Health:  http://localhost:${config.port}/api/health
   Node:    ${process.version}
-=====================================================
   `);
 });
 
