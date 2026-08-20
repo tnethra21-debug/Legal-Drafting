@@ -18,7 +18,8 @@ import {
   Clock,
   Sparkles,
   HelpCircle,
-  FolderKanban
+  FolderKanban,
+  Target
 } from 'lucide-react';
 
 export const DashboardPage = ({ onNavigate }) => {
@@ -360,11 +361,10 @@ export const DashboardPage = ({ onNavigate }) => {
                 ].map((b) => (
                   <div
                     key={b.id}
-                    className={`p-2.5 rounded-xl border flex flex-col items-center justify-center ${
-                      b.unlocked
+                    className={`p-2.5 rounded-xl border flex flex-col items-center justify-center ${b.unlocked
                         ? 'bg-amber-500/10 border-amber-500/30 text-white'
                         : 'bg-slate-900/40 border-slate-800/40 text-slate-600 opacity-40'
-                    }`}
+                      }`}
                     title={b.name}
                   >
                     <div className="text-2xl mb-1">{b.icon}</div>
