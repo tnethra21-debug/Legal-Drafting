@@ -1,49 +1,21 @@
 // frontend/src/pages/AuthPage.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { useLanguage } from '../context/LanguageContext.jsx';
-import { Scale, Lock, Mail, User, Building, AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
+import {
+  Scale,
+  Lock,
+  Mail,
+  AlertCircle,
+  ArrowRight
+} from 'lucide-react';
 
-export const AuthPage = ({ mode = 'login', onNavigate }) => {
-  const { login, register } = useAuth();
-  const { t } = useLanguage();
-  const [isLogin, setIsLogin] = useState(mode === 'login');
+const AuthPage = ({ onNavigate }) => {
+  const { login } = useAuth();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    institution: ''
-  });
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError('');
-  };
-
-  const handleQuickFillDemo = (role = 'student') => {
-    if (role === 'student') {
-      setFormData({
-        name: 'Aditya Sharma',
-        email: 'student@lawcollege.edu',
-        password: 'Student@123',
-        confirmPassword: 'Student@123',
-        institution: 'National Law School of India'
-      });
-    } else {
-      setFormData({
-        name: 'Prof. Lakshmi Narayanan',
-        email: 'admin@lawcollege.edu',
-        password: 'Student@123',
-        confirmPassword: 'Student@123',
-        institution: 'Faculty of Law, National University'
-      });
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,212 +23,198 @@ export const AuthPage = ({ mode = 'login', onNavigate }) => {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        const res = await login(formData.email, formData.password);
-        if (res.success) {
-          // If student has not completed language or diagnostic, take to onboarding
-          if (!res.user.isDiagnosticCompleted) {
-            onNavigate('language-select');
-          } else {
-            onNavigate('dashboard');
-          }
-        }
+      if (!email || !password) {
+        throw new Error('Please enter your email and password.');
+      }
+
+      const res = await login(email, password);
+
+      if (!res?.success) {
+        throw new Error(res?.message || 'Invalid email or password.');
+      }
+
+      if (res.user?.isDiagnosticCompleted) {
+        onNavigate('dashboard');
       } else {
-        if (!formData.name || !formData.email || !formData.password) {
-          throw new Error('Please fill in all required fields.');
-        }
-        if (formData.password !== formData.confirmPassword) {
-          throw new Error('Passwords do not match.');
-        }
-        if (formData.password.length < 6) {
-          throw new Error('Password must be at least 6 characters.');
-        }
-
-        const res = await register({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          institution: formData.institution
-        });
-
-        if (res.success) {
-          onNavigate('language-select');
-        }
+        onNavigate('language-select');
       }
     } catch (err) {
-      setError(err.message || 'Authentication failed.');
+      setError(err.message || 'Login failed.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen mesh-gradient-bg flex items-center justify-center p-4">
-      <div className="w-full max-w-md glass-card p-6 sm:p-8 border border-slate-800 shadow-2xl relative">
-        {/* Glow */}
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-amber-500/20 blur-3xl rounded-full pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center bg-[#eef1f7] px-4 relative overflow-hidden">
 
-        {/* Brand header */}
-        <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-300 p-0.5 mx-auto mb-3 shadow-lg shadow-amber-500/20 flex items-center justify-center">
-            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-              <Scale className="w-6 h-6 text-amber-400" />
-            </div>
+      {/* Clay Decorations */}
+      <div className="absolute top-10 left-8 w-28 h-28 rounded-[35%] bg-[#eef1f7]
+        shadow-[10px_10px_20px_rgba(0,0,0,.1),-10px_-10px_20px_rgba(255,255,255,.9)]
+        rotate-12" />
+
+      <div className="absolute top-24 right-10 w-20 h-20 rounded-full bg-[#eef1f7]
+        shadow-[8px_8px_16px_rgba(0,0,0,.1),-8px_-8px_16px_rgba(255,255,255,.9)]" />
+
+      <div className="w-full max-w-md relative z-10">
+
+        {/* Brand */}
+        <div className="text-center mb-7">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center
+            rounded-[22px] bg-[#eef1f7] text-violet-600
+            shadow-[9px_9px_18px_rgba(0,0,0,.12),-9px_-9px_18px_rgba(255,255,255,.95)]">
+            <Scale size={30} strokeWidth={2.2} />
           </div>
-          <h2 className="text-2xl font-bold text-white">
-            {isLogin ? 'Welcome Back to LegalDraft' : 'Create Law Student Account'}
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            {isLogin ? 'Enter your credentials to continue drafting' : 'Start your progressive legal drafting journey'}
+
+          <h1 className="text-3xl font-extrabold text-slate-800">
+            LegalDraft
+          </h1>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Learn • Practice • Draft • Improve
           </p>
         </div>
 
-        {/* Tab switcher */}
-        <div className="flex bg-slate-900/80 p-1 rounded-xl border border-slate-800 mb-6 text-xs font-semibold">
-          <button
-            type="button"
-            onClick={() => { setIsLogin(true); setError(''); }}
-            className={`flex-1 py-2 rounded-lg transition ${
-              isLogin ? 'bg-amber-500 text-slate-950 font-bold shadow-md' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t('login')}
-          </button>
-          <button
-            type="button"
-            onClick={() => { setIsLogin(false); setError(''); }}
-            className={`flex-1 py-2 rounded-lg transition ${
-              !isLogin ? 'bg-amber-500 text-slate-950 font-bold shadow-md' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            {t('createAccount')}
-          </button>
-        </div>
+        {/* Login Card */}
+        <div className="rounded-[30px] bg-[#eef1f7] p-7 sm:p-8
+          shadow-[18px_18px_35px_rgba(0,0,0,.12),-18px_-18px_35px_rgba(255,255,255,.95)]">
 
-        {error && (
-          <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs mb-4">
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
-            <span>{error}</span>
+          {/* Heading */}
+          <div className="text-center mb-7">
+            <h2 className="text-2xl font-extrabold text-slate-800">
+              Welcome Back
+            </h2>
+
+            <p className="mt-2 text-sm text-slate-500">
+              Continue your legal drafting journey.
+            </p>
           </div>
-        )}
 
-        <form onSubmit={handleSubmit} className="space-y-3.5">
-          {!isLogin && (
-            <>
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Full Legal Name *</label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="e.g. Aditya Sharma"
-                    className="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Law College / University</label>
-                <div className="relative">
-                  <Building className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                  <input
-                    type="text"
-                    name="institution"
-                    value={formData.institution}
-                    onChange={handleChange}
-                    placeholder="e.g. National Law School of India"
-                    className="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                  />
-                </div>
-              </div>
-            </>
+          {/* Error */}
+          {error && (
+            <div className="mb-5 flex items-center gap-2 rounded-2xl bg-red-100
+              px-4 py-3 text-sm text-red-600">
+              <AlertCircle size={18} />
+              <span>{error}</span>
+            </div>
           )}
 
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Email Address *</label>
-            <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@lawcollege.edu"
-                className="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                required
-              />
-            </div>
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
 
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Password *</label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                required
-              />
-            </div>
-          </div>
-
-          {!isLogin && (
+            {/* Email */}
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Confirm Password *</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Email Address
+              </label>
+
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Mail
+                  size={18}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-500"
+                />
+
                 <input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setError('');
+                  }}
+                  placeholder="Enter your email"
+                  className="w-full rounded-2xl bg-[#eef1f7] py-3.5 pl-11 pr-4
+                    text-sm text-slate-800 outline-none
+                    shadow-[inset_5px_5px_10px_rgba(0,0,0,.08),inset_-5px_-5px_10px_rgba(255,255,255,.9)]
+                    focus:ring-2 focus:ring-violet-300"
                   required
                 />
               </div>
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full btn-gold py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 mt-4 disabled:opacity-50"
-          >
-            <span>{loading ? 'Authenticating...' : isLogin ? t('login') : t('createAccount')}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </form>
+            {/* Password */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Password
+              </label>
 
-        {/* Demo Quick-Fill Pill */}
-        <div className="mt-6 pt-4 border-t border-slate-800 text-center">
-          <p className="text-[11px] text-slate-400 mb-2">Quick demo test accounts:</p>
-          <div className="flex items-center justify-center gap-2">
+              <div className="relative">
+                <Lock
+                  size={18}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-500"
+                />
+
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setError('');
+                  }}
+                  placeholder="Enter your password"
+                  className="w-full rounded-2xl bg-[#eef1f7] py-3.5 pl-11 pr-4
+                    text-sm text-slate-800 outline-none
+                    shadow-[inset_5px_5px_10px_rgba(0,0,0,.08),inset_-5px_-5px_10px_rgba(255,255,255,.9)]
+                    focus:ring-2 focus:ring-violet-300"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Forgot Password */}
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() =>
+                  setError('Password recovery will be available soon.')
+                }
+                className="text-xs font-semibold text-violet-600 hover:underline"
+              >
+                Forgot Password?
+              </button>
+            </div>
+
+            {/* Login */}
             <button
-              type="button"
-              onClick={() => handleQuickFillDemo('student')}
-              className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-amber-300 hover:bg-slate-800 transition"
+              type="submit"
+              disabled={loading}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl
+                bg-violet-500 py-3.5 text-sm font-extrabold text-white
+                shadow-[8px_8px_16px_rgba(0,0,0,.13),-8px_-8px_16px_rgba(255,255,255,.8)]
+                transition hover:-translate-y-0.5 hover:bg-violet-600
+                disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Fill Demo Student
+              <span>
+                {loading ? 'Logging in...' : 'Login'}
+              </span>
+
+              {!loading && <ArrowRight size={19} />}
             </button>
+          </form>
+
+          {/* Get Started */}
+          <div className="mt-7 text-center text-sm text-slate-500">
+            <span>New to LegalDraft?</span>
+
             <button
               type="button"
-              onClick={() => handleQuickFillDemo('admin')}
-              className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-sky-300 hover:bg-slate-800 transition"
+              onClick={() =>
+                setError('Registration will be available soon.')
+              }
+              className="ml-1 font-bold text-violet-600 hover:underline"
             >
-              Fill Demo Admin
+              Get Started
             </button>
           </div>
         </div>
+
+        {/* Footer */}
+        <p className="mt-5 text-center text-xs text-slate-400">
+          AI-powered legal drafting learning platform
+        </p>
+
       </div>
     </div>
   );
 };
+
+export { AuthPage };
+export default AuthPage;
