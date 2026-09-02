@@ -1,7 +1,6 @@
 // frontend/src/pages/DraftingWorkspacePage.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { useLanguage } from '../context/LanguageContext.jsx';
 import { api } from '../services/api.js';
 import { ProgressBar } from '../components/ProgressBar.jsx';
 import {
@@ -23,8 +22,7 @@ import {
 } from 'lucide-react';
 
 export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNavigate }) => {
-  const { user, addXPLocally, setUnlockedBadge } = useAuth();
-  const { t } = useLanguage();
+  const { addXPLocally, setUnlockedBadge } = useAuth();
 
   const [scenario, setScenario] = useState(null);
   const [draftText, setDraftText] = useState('');
@@ -111,49 +109,49 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
   const charCount = draftText.length;
 
   return (
-    <div className="min-h-screen mesh-gradient-bg text-slate-100 py-6 px-4 lg:px-8">
+    <div className="min-h-screen mesh-gradient-bg text-slate-900 py-6 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-4">
         {/* Top bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-4 sm:p-5 border border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex items-center gap-3">
             <button
               onClick={() => onNavigate('scenarios', { domainId: scenario?.domainId, levelId: scenario?.levelId })}
-              className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition"
+              className="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 transition"
               title="Back to scenarios"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                <span className="text-xs font-bold text-amber-800 uppercase tracking-wider bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                   {scenario?.documentType || 'Legal Instrument'}
                 </span>
-                <span className="text-xs text-slate-400 font-semibold">{scenario?.levelId} Level</span>
+                <span className="text-xs text-slate-500 font-semibold">{scenario?.levelId} Level</span>
               </div>
-              <h1 className="text-lg sm:text-xl font-black text-white">{scenario?.title}</h1>
+              <h1 className="text-lg sm:text-xl font-black text-slate-900">{scenario?.title}</h1>
             </div>
           </div>
 
           {/* Action Bar */}
           <div className="flex items-center gap-2">
             {saveStatus && (
-              <span className="text-xs text-emerald-400 font-semibold animate-pulse mr-2">
+              <span className="text-xs text-emerald-700 font-semibold animate-pulse mr-2">
                 ✓ {saveStatus}
               </span>
             )}
             <button
               onClick={handleSaveDraft}
               disabled={saving}
-              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs font-bold text-slate-200 hover:bg-slate-800 transition flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition flex items-center gap-1.5 shadow-2xs"
             >
-              <Save className="w-3.5 h-3.5 text-slate-400" />
+              <Save className="w-3.5 h-3.5 text-slate-500" />
               <span>{saving ? 'Saving...' : 'Save Draft'}</span>
             </button>
 
             <button
               onClick={handleSubmitForAI}
               disabled={evaluating || !draftText.trim()}
-              className="btn-gold px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-amber-500/20 disabled:opacity-40"
+              className="btn-gold px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm disabled:opacity-40"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>{evaluating ? 'Analyzing with Rubrics...' : 'Submit for AI Review'}</span>
@@ -164,9 +162,9 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
         {/* Split Screen Studio Workspace */}
         <div className="grid lg:grid-cols-12 gap-6 items-start">
           {/* Left Panel: Scenario Facts, Elements, Legal References, Template */}
-          <div className="lg:col-span-5 glass-card border border-slate-800 overflow-hidden flex flex-col h-[750px]">
+          <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-[750px]">
             {/* Tab Header */}
-            <div className="flex border-b border-slate-800 bg-slate-950/60 p-1.5 text-xs font-semibold">
+            <div className="flex border-b border-slate-200 bg-slate-50/80 p-1.5 text-xs font-semibold">
               {[
                 { id: 'facts', label: 'Facts & Instructions', icon: '📋' },
                 { id: 'elements', label: 'Required Clauses', icon: '🔍' },
@@ -178,8 +176,8 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
                   onClick={() => setActiveRefTab(tab.id)}
                   className={`flex-1 py-2 rounded-lg transition flex items-center justify-center gap-1.5 text-[11px] ${
                     activeRefTab === tab.id
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-white text-amber-800 border border-slate-200/80 font-bold shadow-xs'
+                      : 'text-slate-500 hover:text-slate-900'
                   }`}
                 >
                   <span>{tab.icon}</span>
@@ -189,23 +187,23 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
             </div>
 
             {/* Tab Contents */}
-            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-slate-300 leading-relaxed">
+            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-slate-700 leading-relaxed">
               {activeRefTab === 'facts' && (
                 <div className="space-y-4">
-                  <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                    <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block mb-1">
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span className="text-[10px] font-bold text-amber-800 uppercase tracking-widest block mb-1">
                       Case Facts
                     </span>
-                    <p className="whitespace-pre-line text-slate-300 font-sans leading-relaxed">
+                    <p className="whitespace-pre-line text-slate-700 font-sans leading-relaxed">
                       {scenario?.facts}
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                    <span className="text-[10px] font-bold text-amber-300 uppercase tracking-widest block mb-1">
+                  <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
+                    <span className="text-[10px] font-bold text-amber-900 uppercase tracking-widest block mb-1">
                       Drafting Mandate & Task
                     </span>
-                    <p className="text-amber-200/90 font-medium">
+                    <p className="text-amber-950 font-medium leading-relaxed">
                       {scenario?.task}
                     </p>
                   </div>
@@ -214,18 +212,18 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
 
               {activeRefTab === 'elements' && (
                 <div className="space-y-3">
-                  <div className="text-[11px] text-slate-400 font-semibold">
+                  <div className="text-[11px] text-slate-500 font-semibold">
                     The AI Rubric verifies whether your draft includes these essential elements:
                   </div>
                   {(scenario?.requiredElements || []).map((req, i) => (
                     <div
                       key={i}
-                      className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs flex items-start gap-2.5"
+                      className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs flex items-start gap-2.5"
                     >
-                      <div className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">
                         {i + 1}
                       </div>
-                      <span className="text-slate-200">{req}</span>
+                      <span className="text-slate-800 leading-relaxed">{req}</span>
                     </div>
                   ))}
                 </div>
@@ -233,20 +231,20 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
 
               {activeRefTab === 'references' && (
                 <div className="space-y-3">
-                  <div className="text-[11px] text-slate-400 font-semibold">
+                  <div className="text-[11px] text-slate-500 font-semibold">
                     Approved Statutory Provisions & Authorities:
                   </div>
                   {(scenario?.legalReferences || []).map((ref, i) => (
                     <div
                       key={i}
-                      className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5"
+                      className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5"
                     >
-                      <div className="font-bold text-white flex items-center gap-1.5 text-xs">
-                        <Scale className="w-3.5 h-3.5 text-sky-400" />
+                      <div className="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
+                        <Scale className="w-3.5 h-3.5 text-sky-600" />
                         {ref.act}
                       </div>
-                      <div className="text-amber-400 font-semibold text-[11px]">{ref.section}</div>
-                      <div className="text-slate-400 text-[11px]">{ref.note}</div>
+                      <div className="text-amber-800 font-semibold text-[11px]">{ref.section}</div>
+                      <div className="text-slate-600 text-[11px] leading-relaxed">{ref.note}</div>
                     </div>
                   ))}
                 </div>
@@ -254,16 +252,16 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
 
               {activeRefTab === 'template' && (
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500 font-semibold">
                     <span>Reference Legal Skeleton</span>
                     <button
                       onClick={() => setDraftText(scenario?.template || '')}
-                      className="text-amber-400 hover:underline"
+                      className="text-amber-700 font-bold hover:underline"
                     >
                       Insert into Editor
                     </button>
                   </div>
-                  <pre className="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-[11px] text-slate-300 whitespace-pre-wrap leading-relaxed overflow-x-auto">
+                  <pre className="p-4 rounded-xl bg-slate-50 border border-slate-200 font-mono text-[11px] text-slate-800 whitespace-pre-wrap leading-relaxed overflow-x-auto">
                     {scenario?.template}
                   </pre>
                 </div>
@@ -272,16 +270,16 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
           </div>
 
           {/* Right Panel: Live Drafting Editor & AI Feedback View */}
-          <div className="lg:col-span-7 glass-card border border-slate-800 overflow-hidden flex flex-col h-[750px]">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-[750px]">
             {/* View Switcher Bar */}
-            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-950/60 p-2">
+            <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50/80 p-2">
               <div className="flex gap-1">
                 <button
                   onClick={() => setActiveRightTab('editor')}
                   className={`px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
                     activeRightTab === 'editor'
-                      ? 'bg-amber-500 text-slate-950 shadow-md'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-amber-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                   }`}
                 >
                   <FileText className="w-3.5 h-3.5" />
@@ -293,10 +291,10 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
                   disabled={!latestEvaluation}
                   className={`px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
                     activeRightTab === 'feedback'
-                      ? 'bg-amber-500 text-slate-950 shadow-md'
+                      ? 'bg-amber-600 text-white shadow-xs'
                       : latestEvaluation
-                      ? 'text-amber-400 hover:bg-slate-900'
-                      : 'text-slate-600 cursor-not-allowed'
+                      ? 'text-amber-800 hover:bg-amber-50 font-semibold'
+                      : 'text-slate-400 cursor-not-allowed'
                   }`}
                 >
                   <Sparkles className="w-3.5 h-3.5" />
@@ -307,10 +305,10 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
               </div>
 
               {/* Word count metrics */}
-              <div className="text-[11px] text-slate-400 flex items-center gap-3 pr-2">
+              <div className="text-[11px] text-slate-500 flex items-center gap-3 pr-2 font-medium">
                 <span>{wordCount} Words</span>
                 <span>{charCount} Chars</span>
-                <span className="font-semibold text-slate-500">v{submission?.attemptsCount || 1}</span>
+                <span className="font-semibold text-slate-600">v{submission?.attemptsCount || 1}</span>
               </div>
             </div>
 
@@ -321,7 +319,7 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
                   value={draftText}
                   onChange={(e) => setDraftText(e.target.value)}
                   placeholder="Draft your legal instrument here..."
-                  className="w-full flex-1 bg-slate-950/80 border border-slate-800 rounded-xl p-5 font-mono text-xs sm:text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500/60 leading-relaxed resize-none shadow-inner"
+                  className="w-full flex-1 bg-slate-50 border border-slate-200 rounded-xl p-5 font-mono text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/80 leading-relaxed resize-none transition"
                   spellCheck={false}
                 />
               </div>
@@ -331,25 +329,25 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
                 {latestEvaluation && (
                   <>
                     {/* Overall Score Banner */}
-                    <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-slate-900 to-slate-900 border border-amber-500/30 flex items-center justify-between">
+                    <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-center justify-between">
                       <div>
-                        <div className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-400 uppercase tracking-widest">
+                        <div className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 uppercase tracking-widest">
                           <ShieldCheck className="w-3.5 h-3.5" /> Grounded Evaluation
                         </div>
-                        <h3 className="text-xl font-black text-white">AI Drafting Review</h3>
-                        <p className="text-xs text-slate-400 mt-0.5">Attempt v{latestEvaluation.versionNumber || selectedVersion}</p>
+                        <h3 className="text-xl font-black text-slate-900">AI Drafting Review</h3>
+                        <p className="text-xs text-slate-500 mt-0.5">Attempt v{latestEvaluation.versionNumber || selectedVersion}</p>
                       </div>
                       <div className="text-center">
-                        <div className="text-3xl font-black text-amber-400">
+                        <div className="text-3xl font-black text-amber-700">
                           {latestEvaluation.overallScore}%
                         </div>
-                        <span className="text-[10px] font-semibold text-slate-400 uppercase">Overall Score</span>
+                        <span className="text-[10px] font-semibold text-slate-500 uppercase">Overall Score</span>
                       </div>
                     </div>
 
                     {/* Criteria Score Breakdown Meters */}
-                    <div className="space-y-3 p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <div className="space-y-3 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
                         Rubric Criteria Breakdown
                       </h4>
                       <div className="grid sm:grid-cols-2 gap-4 text-xs">
@@ -362,12 +360,12 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
 
                     {/* Strengths */}
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4" /> Drafting Strengths
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Drafting Strengths
                       </h4>
                       <div className="space-y-1.5">
                         {latestEvaluation.strengths.map((str, i) => (
-                          <div key={i} className="p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 text-xs text-emerald-200">
+                          <div key={i} className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-medium">
                             ✓ {str}
                           </div>
                         ))}
@@ -376,12 +374,12 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
 
                     {/* Actionable Improvements */}
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4" /> Actionable Improvements
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-amber-600" /> Actionable Improvements
                       </h4>
                       <div className="space-y-1.5">
                         {latestEvaluation.improvements.map((imp, i) => (
-                          <div key={i} className="p-3 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs text-amber-200">
+                          <div key={i} className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 font-medium">
                             • {imp}
                           </div>
                         ))}
@@ -391,12 +389,12 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
                     {/* Missing Elements (if any) */}
                     {latestEvaluation.missingElements?.length > 0 && (
                       <div className="space-y-2">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
-                          <AlertTriangle className="w-4 h-4" /> Missing Requisite Clauses
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-rose-800 flex items-center gap-1.5">
+                          <AlertTriangle className="w-4 h-4 text-rose-600" /> Missing Requisite Clauses
                         </h4>
                         <div className="space-y-1.5">
                           {latestEvaluation.missingElements.map((miss, i) => (
-                            <div key={i} className="p-3 rounded-xl bg-rose-500/5 border border-rose-500/20 text-xs text-rose-200">
+                            <div key={i} className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-900 font-medium">
                               ⚠️ {miss}
                             </div>
                           ))}
@@ -408,7 +406,7 @@ export const DraftingWorkspacePage = ({ scenarioId = 'scen-basic-civil-1', onNav
                     <div className="pt-2">
                       <button
                         onClick={handleStartRedraft}
-                        className="w-full btn-gold py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+                        className="w-full btn-gold py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm"
                       >
                         <RotateCcw className="w-4 h-4" />
                         <span>Improve & Redraft (v{(submission?.attemptsCount || 1) + 1})</span>

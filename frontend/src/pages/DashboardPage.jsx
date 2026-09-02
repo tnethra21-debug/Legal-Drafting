@@ -1,9 +1,7 @@
 // frontend/src/pages/DashboardPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { useLanguage } from '../context/LanguageContext.jsx';
 import { api } from '../services/api.js';
-import { ProgressBar } from '../components/ProgressBar.jsx';
 import {
   Scale,
   Zap,
@@ -24,7 +22,6 @@ import {
 
 export const DashboardPage = ({ onNavigate }) => {
   const { user } = useAuth();
-  const { t } = useLanguage();
 
   const [roadmap, setRoadmap] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -62,52 +59,52 @@ export const DashboardPage = ({ onNavigate }) => {
   const levelInfo = getLevelDetails(currentLevelId);
 
   return (
-    <div className="min-h-screen mesh-gradient-bg text-slate-100 py-8 px-4 lg:px-8">
+    <div className="min-h-screen mesh-gradient-bg text-slate-900 py-8 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Welcome Header */}
-        <div className="glass-card p-6 sm:p-8 border border-slate-800 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-1 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
               <span>Learner Dashboard</span>
             </div>
-            <h1 className="text-2xl sm:text-4xl font-black text-white">
+            <h1 className="text-2xl sm:text-4xl font-black text-slate-900">
               Welcome back, {user?.name || 'Counsel'}!
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300">
+            <p className="text-xs sm:text-sm text-slate-500">
               {user?.institution || 'Faculty of Law'} • Track your progressive drafting curriculum
             </p>
           </div>
 
           {/* Stat Pills */}
           <div className="flex items-center gap-3 flex-wrap relative z-10">
-            <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl font-bold">
+            <div className="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 text-xl font-bold">
                 ⚡
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-semibold">Total XP</div>
-                <div className="text-lg font-black text-amber-400">{user?.xp || 0} XP</div>
+                <div className="text-xs text-slate-500 font-semibold">Total XP</div>
+                <div className="text-lg font-black text-amber-700">{user?.xp || 0} XP</div>
               </div>
             </div>
 
-            <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl font-bold">
+            <div className="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-700 text-xl font-bold">
                 🔥
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-semibold">Streak</div>
-                <div className="text-lg font-black text-rose-400">{user?.streakDays || 1} Days</div>
+                <div className="text-xs text-slate-500 font-semibold">Streak</div>
+                <div className="text-lg font-black text-rose-700">{user?.streakDays || 1} Days</div>
               </div>
             </div>
 
-            <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-xl font-bold">
+            <div className="bg-slate-50 border border-slate-200 p-3 rounded-2xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 text-xl font-bold">
                 {levelInfo.badge}
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-semibold">Assigned Tier</div>
-                <div className="text-sm font-black text-sky-300">{levelInfo.name}</div>
+                <div className="text-xs text-slate-500 font-semibold">Assigned Tier</div>
+                <div className="text-sm font-black text-sky-800">{levelInfo.name}</div>
               </div>
             </div>
           </div>
@@ -117,14 +114,14 @@ export const DashboardPage = ({ onNavigate }) => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left 2 Cols: Personalized Learning Path Roadmap */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="glass-card p-6 sm:p-8 border border-slate-800 space-y-6">
+            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <Target className="w-5 h-5 text-amber-400" />
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-amber-600" />
                     Personalized Learning Path
                   </h2>
-                  <p className="text-xs text-slate-400">Strict backend-enforced progression sequence</p>
+                  <p className="text-xs text-slate-500">Strict backend-enforced progression sequence</p>
                 </div>
                 <button
                   onClick={() => onNavigate('basics')}
@@ -140,116 +137,116 @@ export const DashboardPage = ({ onNavigate }) => {
                 {/* Step 1: Drafting Basics */}
                 <div
                   onClick={() => onNavigate('basics')}
-                  className="p-4 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/40 cursor-pointer transition flex items-center justify-between group"
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 cursor-pointer transition flex items-center justify-between group shadow-xs"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold">
                       <BookOpen className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition">
+                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-amber-800 transition">
                         1. Drafting Basics Theory
                       </h3>
-                      <p className="text-xs text-slate-400">8 foundational lessons on legal drafting principles & anatomy</p>
+                      <p className="text-xs text-slate-500">8 foundational lessons on legal drafting principles & anatomy</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                       Available
                     </span>
-                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 transition" />
                   </div>
                 </div>
 
                 {/* Step 2: Quiz Gate */}
                 <div
                   onClick={() => onNavigate('quiz-gate')}
-                  className="p-4 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-amber-500/40 cursor-pointer transition flex items-center justify-between group"
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 cursor-pointer transition flex items-center justify-between group shadow-xs"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 font-bold">
                       🧠
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition">
+                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-amber-800 transition">
                         2. Drafting Basics Quiz Gate
                       </h3>
-                      <p className="text-xs text-slate-400">10 questions • 70% passing threshold to unlock practical scenarios</p>
+                      <p className="text-xs text-slate-500">10 questions • 70% passing threshold to unlock practical scenarios</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">
+                    <span className="text-xs font-semibold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
                       Required Gate
                     </span>
-                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 transition" />
                   </div>
                 </div>
 
                 {/* Step 3: Current Level Practice */}
                 <div
                   onClick={() => onNavigate('domains')}
-                  className="p-4 rounded-2xl bg-slate-900/70 border border-amber-500/30 shadow-lg shadow-amber-500/5 cursor-pointer transition flex items-center justify-between group"
+                  className="p-4 rounded-2xl bg-amber-50/40 border border-amber-300 shadow-sm cursor-pointer transition flex items-center justify-between group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 font-bold">
                       <Zap className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition">
+                        <h3 className="text-sm font-bold text-slate-900 group-hover:text-amber-800 transition">
                           3. {levelInfo.name} Practical Scenarios
                         </h3>
-                        <span className="text-[10px] font-bold bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full border border-sky-500/30">
+                        <span className="text-[10px] font-bold bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full border border-sky-200">
                           Active Tier
                         </span>
                       </div>
-                      <p className="text-xs text-slate-400">Choose between Civil, Criminal (BNS/BNSS), or Conveyancing</p>
+                      <p className="text-xs text-slate-500">Choose between Civil, Criminal (BNS/BNSS), or Conveyancing</p>
                     </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-amber-400" />
+                  <ArrowRight className="w-4 h-4 text-amber-600" />
                 </div>
 
                 {/* Step 4: Level Progression Test */}
                 <div
                   onClick={() => onNavigate('level-test', { level: currentLevelId })}
-                  className="p-4 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-purple-500/40 cursor-pointer transition flex items-center justify-between group"
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-purple-300 hover:bg-purple-50/30 cursor-pointer transition flex items-center justify-between group shadow-xs"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-700 font-bold">
                       🎯
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white group-hover:text-purple-300 transition">
+                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-purple-800 transition">
                         4. {levelInfo.name} Advancement Test
                       </h3>
-                      <p className="text-xs text-slate-400">Demonstrate mastery to unlock next higher level tier</p>
+                      <p className="text-xs text-slate-500">Demonstrate mastery to unlock next higher level tier</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">
+                    <span className="text-xs font-semibold text-purple-800 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">
                       Level Test
                     </span>
-                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition" />
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 transition" />
                   </div>
                 </div>
 
                 {/* Step 5: Final Assessment & Certificate */}
                 <div
                   onClick={() => onNavigate('final-assessment')}
-                  className="p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60 hover:border-amber-500/40 cursor-pointer transition flex items-center justify-between group"
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 cursor-pointer transition flex items-center justify-between group shadow-xs"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 font-bold">
-                      <Award className="w-5 h-5 text-amber-400" />
+                    <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 font-bold">
+                      <Award className="w-5 h-5 text-amber-600" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-slate-200 group-hover:text-amber-300 transition">
+                      <h3 className="text-sm font-bold text-slate-800 group-hover:text-amber-800 transition">
                         5. Final Comprehensive Assessment & Certificate
                       </h3>
-                      <p className="text-xs text-slate-400">Complete multi-section exam to earn verified certification</p>
+                      <p className="text-xs text-slate-500">Complete multi-section exam to earn verified certification</p>
                     </div>
                   </div>
-                  <span className="text-xs font-semibold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full">
+                  <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200">
                     Cap-stone
                   </span>
                 </div>
@@ -258,7 +255,7 @@ export const DashboardPage = ({ onNavigate }) => {
 
             {/* Domain Quick Launch Cards */}
             <div className="space-y-3">
-              <h3 className="text-base font-bold text-white">Choose Your Practice Domain ({levelInfo.name})</h3>
+              <h3 className="text-base font-bold text-slate-900">Choose Your Practice Domain ({levelInfo.name})</h3>
               <div className="grid sm:grid-cols-3 gap-4">
                 {[
                   {
@@ -283,14 +280,14 @@ export const DashboardPage = ({ onNavigate }) => {
                   <div
                     key={d.id}
                     onClick={() => onNavigate('scenarios', { domainId: d.id, levelId: currentLevelId })}
-                    className="glass-card-interactive p-5 border border-slate-800 cursor-pointer flex flex-col justify-between"
+                    className="glass-card-interactive p-5 border border-slate-200 cursor-pointer flex flex-col justify-between"
                   >
                     <div>
                       <div className="text-3xl mb-3">{d.icon}</div>
-                      <h4 className="font-bold text-white text-sm mb-1">{d.name}</h4>
-                      <p className="text-xs text-slate-400">{d.desc}</p>
+                      <h4 className="font-bold text-slate-900 text-sm mb-1">{d.name}</h4>
+                      <p className="text-xs text-slate-500 leading-relaxed">{d.desc}</p>
                     </div>
-                    <div className="mt-4 flex items-center justify-between text-xs font-bold text-amber-400">
+                    <div className="mt-4 flex items-center justify-between text-xs font-bold text-amber-700">
                       <span>View Scenarios</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </div>
@@ -303,49 +300,49 @@ export const DashboardPage = ({ onNavigate }) => {
           {/* Right Col: Quick Shortcuts & Badges */}
           <div className="space-y-6">
             {/* Quick Actions Card */}
-            <div className="glass-card p-6 border border-slate-800 space-y-4">
-              <h3 className="text-base font-bold text-white">Quick Actions</h3>
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <h3 className="text-base font-bold text-slate-900">Quick Actions</h3>
               <div className="space-y-2">
                 <button
                   onClick={() => onNavigate('portfolio')}
-                  className="w-full p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-200 hover:text-white hover:border-slate-700 flex items-center justify-between transition"
+                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-between transition"
                 >
                   <span className="flex items-center gap-2">
-                    <FolderKanban className="w-4 h-4 text-emerald-400" />
+                    <FolderKanban className="w-4 h-4 text-emerald-600" />
                     Open My Drafting Portfolio
                   </span>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
                 </button>
 
                 <button
                   onClick={() => onNavigate('certificate')}
-                  className="w-full p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-200 hover:text-white hover:border-slate-700 flex items-center justify-between transition"
+                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-between transition"
                 >
                   <span className="flex items-center gap-2">
-                    <Award className="w-4 h-4 text-purple-400" />
+                    <Award className="w-4 h-4 text-purple-600" />
                     View Certificate Status
                   </span>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
                 </button>
 
                 <button
-                  onClick={() => onNavigate('language-select')}
-                  className="w-full p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-200 hover:text-white hover:border-slate-700 flex items-center justify-between transition"
+                  onClick={() => onNavigate('basics')}
+                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-between transition"
                 >
                   <span className="flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-sky-400" />
-                    Change Instruction Language
+                    <BookOpen className="w-4 h-4 text-sky-600" />
+                    Review Drafting Fundamentals
                   </span>
-                  <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
                 </button>
               </div>
             </div>
 
             {/* Achievements & Badges Showcase */}
-            <div className="glass-card p-6 border border-slate-800 space-y-4">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-white">Your Achievements</h3>
-                <span className="text-xs text-amber-400 font-bold">{user?.badges?.length || 1} Earned</span>
+                <h3 className="text-base font-bold text-slate-900">Your Achievements</h3>
+                <span className="text-xs text-amber-700 font-bold">{user?.badges?.length || 1} Earned</span>
               </div>
 
               <div className="grid grid-cols-4 gap-2 text-center">
@@ -362,13 +359,13 @@ export const DashboardPage = ({ onNavigate }) => {
                   <div
                     key={b.id}
                     className={`p-2.5 rounded-xl border flex flex-col items-center justify-center ${b.unlocked
-                        ? 'bg-amber-500/10 border-amber-500/30 text-white'
-                        : 'bg-slate-900/40 border-slate-800/40 text-slate-600 opacity-40'
+                        ? 'bg-amber-50 border-amber-200 text-slate-900 shadow-2xs'
+                        : 'bg-slate-50 border-slate-200/60 text-slate-400 opacity-40'
                       }`}
                     title={b.name}
                   >
                     <div className="text-2xl mb-1">{b.icon}</div>
-                    <div className="text-[9px] font-semibold truncate w-full">{b.name}</div>
+                    <div className="text-[9px] font-semibold truncate w-full text-slate-700">{b.name}</div>
                   </div>
                 ))}
               </div>

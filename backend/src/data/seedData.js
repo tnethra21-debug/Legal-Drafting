@@ -2,9 +2,7 @@
 // Complete pre-seeded dataset for the Legal Drafting Learning Platform
 
 export const seedLanguages = [
-  { id: 'en', code: 'en', name: 'English', nativeName: 'English', is_active: true, flag: '🇬🇧' },
-  { id: 'ta', code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', is_active: true, flag: '🇮🇳' },
-  { id: 'hi', code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', is_active: true, flag: '🇮🇳' }
+  { id: 'en', code: 'en', name: 'English', nativeName: 'English', is_active: true, flag: '🇬🇧' }
 ];
 
 export const seedLevels = [
@@ -80,8 +78,6 @@ export const seedDiagnosticQuestions = [
   {
     id: 'diag-1',
     question: 'What is the primary objective of legal drafting in professional practice?',
-    question_ta: 'தொழில்முறை சட்ட நடைமுறையில் சட்ட வரைவின் முதன்மை நோக்கம் என்ன?',
-    question_hi: 'पेशेवर कानूनी अभ्यास में कानूनी प्रारूपण का मुख्य उद्देश्य क्या है?',
     options: [
       { id: 'A', text: 'To clearly communicate legal facts, rights, duties, and prayers with precision and unambiguity' },
       { id: 'B', text: 'To use archaic Latin maxims to make the document sound authoritative' },
@@ -95,8 +91,6 @@ export const seedDiagnosticQuestions = [
   {
     id: 'diag-2',
     question: 'In a Civil Plaint under Order VII Rule 1 CPC, which element is strictly mandatory to establish court authority?',
-    question_ta: 'சிவில் வழக்குரையில் (Order VII CPC), நீதிமன்ற அதிகாரத்தை நிலைநிறுத்த எது கட்டாயமானது?',
-    question_hi: 'सीपीसी के आदेश VII के तहत एक वादपत्र में अदालत के अधिकार क्षेत्र को स्थापित करने के लिए कौन सा तत्व अनिवार्य है?',
     options: [
       { id: 'A', text: 'Cause of Action statement and Valuation with Jurisdiction clause' },
       { id: 'B', text: 'The biography and financial standing of the advocate' },
@@ -110,8 +104,6 @@ export const seedDiagnosticQuestions = [
   {
     id: 'diag-3',
     question: 'Under the new criminal laws (Bharatiya Nagarik Suraksha Sanhita 2023), where is the provision for Regular Bail primarily codified?',
-    question_ta: 'பாரதிய நாகரிக் சுரக்ஷா சன்ஹிதா 2023 (BNSS) கீழ் சாதாரண ஜாமீன் பிரிவு எது?',
-    question_hi: 'भारतीय नागरिक सुरक्षा संहिता 2023 (BNSS) के तहत नियमित जमानत का प्राथमिक प्रावधान कहाँ संहिताबद्ध है?',
     options: [
       { id: 'A', text: 'Section 480 / Section 483 BNSS 2023 (corresponding to Sec 437/439 CrPC)' },
       { id: 'B', text: 'Section 100 Indian Evidence Act' },
@@ -125,8 +117,6 @@ export const seedDiagnosticQuestions = [
   {
     id: 'diag-4',
     question: 'What is the legal consequence of omitting an essential "Habendum" or "Consideration" clause in a Deed of Conveyance?',
-    question_ta: 'ஒரு சொத்து பரிமாற்றப் பத்திரத்தில் கிரையத் தொகை அல்லது உடைமை மாற்ற விதியை விடுவிப்பதன் விளைவு என்ன?',
-    question_hi: 'हस्तांतरण विलेख में आवश्यक प्रतिफल या स्वामित्व हस्तांतरण खंड को छोड़ने का कानूनी परिणाम क्या है?',
     options: [
       { id: 'A', text: 'It may invalidate the conveyance or make transfer of title legally ambiguous and unenforceable' },
       { id: 'B', text: 'It automatically makes the document a criminal offense' },
@@ -140,8 +130,6 @@ export const seedDiagnosticQuestions = [
   {
     id: 'diag-5',
     question: 'Which principle distinguishes "Material Facts" from "Evidence" in pleading (Order VI Rule 2 CPC)?',
-    question_ta: 'வாதுரையில் "முக்கிய உண்மைகள்" மற்றும் "சாட்சியங்கள்" ஆகியவற்றை வேறுபடுத்தும் விதி எது?',
-    question_hi: 'सीपीसी के आदेश VI नियम 2 में अभिवचन में "तथ्य" को "साक्ष्य" से अलग करने वाला सिद्धांत क्या है?',
     options: [
       { id: 'A', text: 'Pleaded facts must state facts only and not the evidence by which they are to be proved' },
       { id: 'B', text: 'Pleadings must include full transcripts of witness cross-examinations' },
@@ -159,8 +147,6 @@ export const seedLessons = [
     id: 'lesson-1',
     order: 1,
     title: 'What is Legal Drafting?',
-    title_ta: 'சட்ட வரைவு என்றால் என்ன?',
-    title_hi: 'कानूनी प्रारूपण क्या है?',
     summary: 'Introduction to legal drafting as the disciplined art and science of preparing binding legal instruments.',
     badge: '⚖️',
     readTime: '4 min',
@@ -184,8 +170,6 @@ export const seedLessons = [
     id: 'lesson-2',
     order: 2,
     title: 'Purpose of Legal Drafting',
-    title_ta: 'சட்ட வரைவின் நோக்கங்கள்',
-    title_hi: 'कानूनी प्रारूपण का उद्देश्य',
     summary: 'Understand the three main goals: Clarity, Enforceability, and Dispute Prevention.',
     badge: '🎯',
     readTime: '5 min',
@@ -209,8 +193,6 @@ export const seedLessons = [
     id: 'lesson-3',
     order: 3,
     title: 'Principles of Good Drafting',
-    title_ta: 'சிறந்த சட்ட வரைவின் கோட்பாடுகள்',
-    title_hi: 'अच्छे प्रारूपण के सिद्धांत',
     summary: 'The 4 Cs of legal drafting: Clarity, Conciseness, Completeness, and Consistency.',
     badge: '📐',
     readTime: '6 min',
@@ -234,8 +216,6 @@ export const seedLessons = [
     id: 'lesson-4',
     order: 4,
     title: 'Structure of a Legal Document',
-    title_ta: 'சட்ட ஆவணத்தின் கட்டமைப்பு',
-    title_hi: 'कानूनी दस्तावेज की संरचना',
     summary: 'Standard structural anatomy: Title, Preamble, Recitals, Operative Clauses, Boilerplate, and Attestation.',
     badge: '🏛️',
     readTime: '7 min',
@@ -261,8 +241,6 @@ export const seedLessons = [
     id: 'lesson-5',
     order: 5,
     title: 'Legal Terminology & Plain Language',
-    title_ta: 'சட்ட கலைச்சொற்கள் மற்றும் எளிய மொழி',
-    title_hi: 'कानूनी शब्दावली और सरल भाषा',
     summary: 'Navigating mandatory terms vs archaic legalese: shall, may, without prejudice, indemnity, whereas.',
     badge: '📖',
     readTime: '5 min',
@@ -286,8 +264,6 @@ export const seedLessons = [
     id: 'lesson-6',
     order: 6,
     title: 'Facts, Issues, and Relief',
-    title_ta: 'உண்மைகள், சிக்கல்கள் மற்றும் நிவாரணம்',
-    title_hi: 'तथ्य, मुद्दे और अनुतोष',
     summary: 'How to structure factual chronology, isolate cause of action, and draft specific, enforceable prayers.',
     badge: '🎯',
     readTime: '6 min',
@@ -311,8 +287,6 @@ export const seedLessons = [
     id: 'lesson-7',
     order: 7,
     title: 'Common Drafting Mistakes',
-    title_ta: 'பொதுவான சட்ட வரைவு பிழைகள்',
-    title_hi: 'सामान्य प्रारूपण त्रुटियाँ',
     summary: 'Learn the traps: missing jurisdictional facts, ambiguous pronouns, conflicting clauses, and omission of statutory limitation.',
     badge: '⚠️',
     readTime: '5 min',
@@ -336,8 +310,6 @@ export const seedLessons = [
     id: 'lesson-8',
     order: 8,
     title: 'Basic Drafting Exercise & Walkthrough',
-    title_ta: 'அடிப்படை வரைவு பயிற்சி & மாதிரி',
-    title_hi: 'बुनियादी प्रारूपण अभ्यास और नमूना',
     summary: 'Deconstruct a complete Statutory Legal Notice clause-by-clause before heading to practical drafting.',
     badge: '✍️',
     readTime: '8 min',

@@ -5,12 +5,10 @@ import { ProgressionService } from '../services/progressionService.js';
 
 export const getDiagnosticQuestions = (req, res) => {
   try {
-    // Return questions with options (omitting the correct answers from client payload)
+    // Return questions with options (omitting correct answers from client payload)
     const questions = db.diagnosticQuestions.map(q => ({
       id: q.id,
       question: q.question,
-      question_ta: q.question_ta,
-      question_hi: q.question_hi,
       options: q.options
     }));
 

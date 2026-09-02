@@ -1,14 +1,12 @@
 // frontend/src/App.jsx
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
-import { LanguageProvider } from './context/LanguageContext.jsx';
 import { Navbar } from './components/Navbar.jsx';
 import { Footer } from './components/Footer.jsx';
 import { BadgeModal } from './components/BadgeModal.jsx';
 
 import { LandingPage } from './pages/LandingPage.jsx';
 import { AuthPage } from './pages/AuthPage.jsx';
-import { LanguageSelectionPage } from './pages/LanguageSelectionPage.jsx';
 import { DiagnosticPage } from './pages/DiagnosticPage.jsx';
 import { DashboardPage } from './pages/DashboardPage.jsx';
 import { DraftingBasicsPage } from './pages/DraftingBasicsPage.jsx';
@@ -27,7 +25,12 @@ function MainApp() {
   const [screenParams, setScreenParams] = useState({});
 
   const handleNavigate = (screen, params = {}) => {
-    setCurrentScreen(screen);
+    // If navigating to obsolete language select, redirect to diagnostic
+    if (screen === 'language-select') {
+      setCurrentScreen('diagnostic');
+    } else {
+      setCurrentScreen(screen);
+    }
     setScreenParams(params);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -38,8 +41,6 @@ function MainApp() {
         return <LandingPage onNavigate={handleNavigate} />;
       case 'auth':
         return <AuthPage mode={screenParams.mode || 'login'} onNavigate={handleNavigate} />;
-      case 'language-select':
-        return <LanguageSelectionPage onNavigate={handleNavigate} />;
       case 'diagnostic':
         return <DiagnosticPage onNavigate={handleNavigate} />;
       case 'dashboard':
@@ -84,7 +85,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-slate-950 text-slate-100 selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-900 selection:bg-amber-100 selection:text-amber-900 antialiased font-sans">
       <Navbar currentScreen={currentScreen} onNavigate={handleNavigate} />
       <main className="flex-1">{renderScreen()}</main>
       <Footer />
@@ -101,9 +102,7 @@ function MainApp() {
 export default function App() {
   return (
     <AuthProvider>
-      <LanguageProvider>
-        <MainApp />
-      </LanguageProvider>
+      <MainApp />
     </AuthProvider>
   );
 }
